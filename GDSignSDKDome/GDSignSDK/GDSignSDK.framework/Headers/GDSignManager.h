@@ -58,8 +58,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 /// 获取人脸认证的UINavigationController
+/// @param name 认证人的姓名
+/// @param cardId 认证人的身份证号
+/// @param edit 是否可编辑
 /// @param backViewController 结果闭包,回传给一个UIViewController对象,即可modal使用
-- (void)faceViewController:(void(^)(UINavigationController *navigationController))backViewController;
+- (void)faceAuthenWithName:(NSString *)name cardId:(NSString *)cardId edit:(BOOL)edit by:(void(^)(UINavigationController *navigationController))backViewController;
+
 
 
 /// 清空注入的参数

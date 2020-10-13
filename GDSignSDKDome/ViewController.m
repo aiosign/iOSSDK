@@ -117,11 +117,18 @@
     NSString *userId = self.userIdTextView.text;
     NSString *fileId = self.fileIdTextView.text;
         
-        //1.获取单例对象,并注入参数,监听内部事件回调及定位错误
-        GDSignManager.sharedManager.delegate = self;
-    [GDSignManager.sharedManager registerBaseURL:@"http://119.163.197.219:8000/api" userId:userId contractId:fileId buildToken:^(NSDictionary * _Nonnull params, int (^ _Nonnull callback)(NSString * _Nonnull)) {
+    //1.获取单例对象,并注入参数,监听内部事件回调及定位错误
+    GDSignManager.sharedManager.delegate = self;
+//    NSString *baseURL = @"http://119.163.197.219:8000/api";
+//    NSString *tokenURL = @"http://192.168.1.201:9997/getToken";
+//    NSString *signURL = @"http://192.168.1.201:9997/getSign";
+    NSString *baseURL = @"https://open.aiosign.com/api";
+    NSString *tokenURL = @"https://open.aiosign.com/open-demo/app-client/getToken";
+    NSString *signURL = @"https://open.aiosign.com/open-demo/app-client/getSign";
+    
+    [GDSignManager.sharedManager registerBaseURL:baseURL userId:userId contractId:fileId buildToken:^(NSDictionary * _Nonnull params, int (^ _Nonnull callback)(NSString * _Nonnull)) {
         
-        [weakSelf.sessionManager POST:@"http://192.168.1.201:9997/getToken" parameters:params headers:@{} progress:^(NSProgress * _Nonnull uploadProgress) {
+        [weakSelf.sessionManager POST:tokenURL parameters:params headers:@{} progress:^(NSProgress * _Nonnull uploadProgress) {
 
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             //模拟:三方解析自己的业务数据
@@ -136,7 +143,7 @@
         
     } buildSign:^(NSString * _Nonnull token, NSDictionary * _Nonnull params, int (^ _Nonnull callback)(NSString * _Nonnull)) {
         
-        [weakSelf.sessionManager POST:@"http://192.168.1.201:9997/getSign" parameters:params headers:@{@"Authentication": token} progress:^(NSProgress * _Nonnull uploadProgress) {
+        [weakSelf.sessionManager POST:signURL parameters:params headers:@{@"Authentication": token} progress:^(NSProgress * _Nonnull uploadProgress) {
             
         } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
             
@@ -193,7 +200,7 @@
 - (void)didClickedGrayButton:(UIButton *)sender {
     [self _registerInformation];
     __weak typeof(self) weakSelf = self;
-    [GDSignManager.sharedManager faceViewController:^(UINavigationController * _Nonnull navigationController) {
+    [GDSignManager.sharedManager faceAuthenWithName:@"姓名" cardId:@"身份证号" edit:YES by:^(UINavigationController * _Nonnull navigationController) {
         if (weakSelf.presentedViewController) return;
         [weakSelf presentViewController:navigationController animated:YES completion:nil];
     }];
