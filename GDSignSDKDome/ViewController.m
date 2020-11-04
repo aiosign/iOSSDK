@@ -57,6 +57,10 @@
 
 @implementation ViewController
 
+- (void)handleError:(NSError *)error jsonObj:(id)jsonObj {
+    NSLog(@"🔥🔥%@🔥🔥%@🔥🔥", error, jsonObj);
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     _templateArray = [NSMutableArray array];
@@ -109,13 +113,14 @@
 /// 注入获取userId,contractId, Token,sign
 - (void)_registerInformation {
     [self _resignKeyboard];
+    GDSignManager.sharedManager.delegate = self;
     __weak typeof(self)weakSelf = self;
 //        NSString *userId = @"00748594463106551808";
 //        NSString *fileId = @"c8d932ef4531511af7442a5092f73c71";
-//    NSString *userId = @"10728297460485214208";
-//    NSString *fileId = @"a8e354d0324bb889dfc577d4045c2c57";
-    NSString *userId = self.userIdTextView.text;
-    NSString *fileId = self.fileIdTextView.text;
+    NSString *userId = @"00748594463106551808";
+    NSString *fileId = @"66225fa387ab91ae4c1ebe89a56d1ee0";
+//    NSString *userId = self.userIdTextView.text;
+//    NSString *fileId = self.fileIdTextView.text;
         
     //1.获取单例对象,并注入参数,监听内部事件回调及定位错误
     GDSignManager.sharedManager.delegate = self;
