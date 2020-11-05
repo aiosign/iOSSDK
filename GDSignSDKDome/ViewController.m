@@ -114,6 +114,7 @@
 - (void)_registerInformation {
     [self _resignKeyboard];
     GDSignManager.sharedManager.delegate = self;
+    GDSignManager.sharedManager.hideRefuse = NO;
     __weak typeof(self)weakSelf = self;
 //        NSString *userId = @"00748594463106551808";
 //        NSString *fileId = @"c8d932ef4531511af7442a5092f73c71";

@@ -35,6 +35,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 事件代理
 @property (nonatomic, weak) id<GDSignManagerDelegate> delegate;
 
+/// 是否隐藏拒签,默认YES
+@property (nonatomic, assign) BOOL hideRefuse;
+
 
 /// 注入参数
 /// @param baseURL 请求域:示例:https://open.aiosign.com/api
